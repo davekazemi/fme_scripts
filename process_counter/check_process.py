@@ -29,7 +29,8 @@ def waiting_for_process(
     timeout: int = 60,
     checkinterval: int = 5,
     process_name: str = 'fme.exe',
-    noExit: int = 1
+    noExit: int = 1,
+    forceKill: bool = False
 ) -> bool:
     """Wait until no matching processes remain, or until the timeout expires."""
     start_time = time.time()
@@ -38,6 +39,9 @@ def waiting_for_process(
         remaining_time = timeout - (time.time() - start_time)
         if remaining_time < 0:
             fme_warn(f'Timeout reached. Exiting after {timeout} seconds.')
+            if forceKill:
+                fme_warn(f'Force killing all {process_name} processes.')
+                os.system(f'taskkill /f /im {process_name}')
             return False
 
         process_count = get_process_count(process_name)
