@@ -25,6 +25,9 @@ The transformer is implemented as a Python script for FME's PythonCaller transfo
 3. Connect input/output ports appropriately
 4. Use to coordinate asynchronous processing tasks
 
+# FME Hub link
+    https://hub.safe.com/publishers/davekazemi/transformers/processcounter
+
 ## Parameters
 
 | Parameter | Description | Default |
@@ -41,10 +44,8 @@ The transformer is implemented as a Python script for FME's PythonCaller transfo
 - Implementing simple throttling mechanisms
 
 ## Installation
-1. Download `check_process.py`
-2. Create a new custom transformer in FME
-3. Add a PythonCaller transformer to the custom transformer
-4. Configure the PythonCaller to use this script
+1. Download `check_process.py` and use it in pythoncaller or use custom transformer build and published in fme hub https://hub.safe.com/publishers/davekazemi/transformers/processcounter
+
 
 ## License
 [Insert your chosen license here]
