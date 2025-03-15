@@ -14,7 +14,7 @@
 The transformer is implemented as a Python script for FME's PythonCaller transformer, utilizing the `psutil` library for process monitoring and `fmeobjects` for FME integration.
 
 ## Requirements
-- FME (tested with version 2020.0 and above)
+- FME (tested with version 2025.0 and above)
 - Python 3.6+
 - psutil library (included with standard FME installations)
 - Windows OS for native notifications (monitoring works on all platforms)
