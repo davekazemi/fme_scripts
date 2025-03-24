@@ -30,14 +30,15 @@ def waiting_for_process(
     checkinterval: int = 5,
     process_name: str = 'fme.exe',
     noExit: int = 1,
-    forceKill: bool = False
+    forceKill: bool = False,
+    wait_to_reach: bool = True
 ) -> bool:
     """Wait until no matching processes remain, or until the timeout expires."""
     start_time = time.time()
 
     while True:
         remaining_time = timeout - (time.time() - start_time)
-        if remaining_time < 0:
+        if remaining_time < 0 and wait_to_reach:
             fme_warn(f'Timeout reached. Exiting after {timeout} seconds.')
             if forceKill:
                 fme_warn(f'Force killing all {process_name} processes.')
@@ -52,8 +53,9 @@ def waiting_for_process(
             fme_inform(f'All {process_name} processes have completed.')
             return True
         else:
-            fme_inform(f'{process_count} {process_name} process(es) running. '
-                       f'Waiting... {int(remaining_time)}s remaining.')
+            fme_inform(f'{process_count} {process_name} process(es) running. ')
+            if not wait_to_reach:
+                fme_inform(f'Waiting... {int(remaining_time)}s remaining.')
         time.sleep(checkinterval)
 
 class FeatureProcessor(BaseTransformer):
