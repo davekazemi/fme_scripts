@@ -36,10 +36,6 @@ A utility for monitoring running processes on a system. This tool is particularl
 
 Contributions, issues, and feature requests are welcome. Feel free to submit a pull request or open an issue to improve these utilities.
 
-## License
-
-[MIT License](LICENSE)
-
 ## Author
 
-[Your Name/Organization]
+[Davood Kazemi]
