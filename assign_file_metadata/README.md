@@ -2,6 +2,14 @@
 
 A Python utility for managing custom metadata for files using FME (Feature Manipulation Engine). This tool allows you to set, get, and remove custom metadata associated with files.
 
+## Overview of Metadata Managers
+
+This utility provides two classes for managing metadata:
+
+- **MetadataManager_ADS**: This class manages metadata by storing it in a custom metadata file associated with the target file. It is suitable for environments where metadata needs to be tightly coupled with the file itself.
+
+- **Metadatamanager_JSON**: This class manages metadata by storing it in a separate JSON file. It is ideal for scenarios where metadata needs to be easily accessible and editable outside the context of the original file.
+
 ## Features
 
 - Set and get custom metadata for files
@@ -28,11 +36,41 @@ Required Python environment paths:
 
 ### Basic Usage
 
+There are two classes available for managing metadata: `MetadataManager_ADS` and `Metadatamanager_JSON`.
+
+#### Using `MetadataManager_ADS`
+
 ```python
-from main import MetadataManager
+from main import MetadataManager_ADS
 
 # Create a metadata manager instance
-metadata_manager = MetadataManager("path/to/your/file")
+metadata_manager = MetadataManager_ADS("path/to/your/file")
+
+# Set a single metadata key
+metadata_manager.set_custom_metadata_key("author", "John Doe")
+
+# Get a metadata value
+author = metadata_manager.get_custom_metadata_key("author")
+
+# Set complete metadata
+metadata = {
+    "author": "John Doe",
+    "created": "2024-03-20",
+    "version": "1.0"
+}
+metadata_manager.set_custom_metadata(metadata)
+
+# Remove metadata
+metadata_manager.remove_custom_metadata()
+```
+
+#### Using `Metadatamanager_JSON`
+
+```python
+from main import Metadatamanager_JSON
+
+# Create a metadata manager instance
+metadata_manager = Metadatamanager_JSON("path/to/your/file")
 
 # Set a single metadata key
 metadata_manager.set_custom_metadata_key("author", "John Doe")
@@ -67,7 +105,6 @@ The script can be used within FME Workbench with the following parameters:
 - `_Metadata`: Complete metadata (for "All" method)
 - `_SpeceficKey`: Key name (for "Justkey" method)
 - `_SpeceficValue`: Value to set (for "Justkey" method)
-
 
 ## Development
 

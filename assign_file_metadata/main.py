@@ -15,7 +15,7 @@ class Method(Enum):
     ALL = 'All'
     JUST_KEY = 'Justkey'
     
-class MetadataManager:
+class MetadataManager_ADS:
     def __init__(self, file_path: str):
         self.file_path = file_path
 
@@ -86,8 +86,61 @@ class MetadataManager:
         except Exception as e:  
             print(f"Error removing custom metadata for {file_path}: {e}")
 
+
+class Metadatamanager_JSON:
+    def __init__(self, file_path: str):
+        self.file_path = file_path
+        self.metadata_json_path =os.path.join(os.path.dirname(file_path),f'{os.path.splitext(os.path.basename(file_path))[0]}_metadata_.json')
+
+    def set_custom_metadata_key(self, key: str, value: str):
+        try:
+            metadata=self.get_custom_metadata()
+            if metadata is None:
+                metadata={}
+            metadata[key]=value
+            self.set_custom_metadata(metadata)
+        except Exception as e:
+            print(f"Error setting custom metadata for {self.file_path}: {e}")
+
+    def get_custom_metadata_key(self, key: str):
+        try:
+            metadata=self.get_custom_metadata()
+            if metadata is None:
+                return None
+            return metadata.get(key,None)
+        except Exception as e:
+            print(f"Error getting custom metadata for {self.file_path}: {e}")
+            return None
+
+    def set_custom_metadata(self, metadata: Dict[str, Any]):
+        try:
+            with open(self.metadata_json_path, "w") as f:
+                json.dump(metadata, f)
+        except Exception as e:
+            print(f"Error setting custom metadata for {self.file_path}: {e}")
+    
+    def get_custom_metadata(self):
+        metadata={}
+        try:
+            if os.path.exists(self.metadata_json_path):
+                with open(self.metadata_json_path, "r") as f:
+                    metadata=json.load(f)
+        except Exception as e:
+            print(f"Error getting custom metadata for {self.file_path}: {e}")
+            return None
+        return metadata
+
+    def remove_custom_metadata(self):
+        try:
+            if os.path.exists(self.metadata_json_path):
+                os.remove(self.metadata_json_path)
+        except Exception as e:
+            print(f"Error removing custom metadata for {self.file_path}: {e}")
+            
+            
+
 if __name__ == "__main__":
-    metadata_manager = MetadataManager("C:/Temp/_metadata_.csv")
+    metadata_manager = Metadatamanager_JSON("C:\\TEMP\\corect.bcnv")
     metadata_manager.set_custom_metadata_key("test", "test")
     print(metadata_manager.get_custom_metadata_key("test")) # should print test
     metadata_manager.remove_custom_metadata()
